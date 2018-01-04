@@ -43,20 +43,20 @@ public abstract class AdapterDelegate<T> {
 
     protected abstract RecyclerView.ViewHolder onCreateViewHolder(LayoutInflater layoutInflater, ViewGroup parent);
 
-    protected abstract void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
+    protected abstract void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh,
                                              @NonNull T item,
                                              @NonNull List<Object> payloads);
 
-    protected void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+    protected void onViewRecycled(@NonNull RecyclerView.ViewHolder vh) {
     }
 
-    protected boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
+    protected boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder vh) {
         return false;
     }
 
-    protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+    protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder vh) {
     }
 
-    protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    protected void onViewDetachedFromWindow(RecyclerView.ViewHolder vh) {
     }
 }

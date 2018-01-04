@@ -54,32 +54,32 @@ public abstract class DelegationAdapter<T> extends RecyclerView.Adapter<Recycler
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        delegatesManager.onBindViewHolder(holder, items.get(position), null);
+    public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
+        delegatesManager.onBindViewHolder(vh, items.get(position), null);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
-        delegatesManager.onBindViewHolder(holder, items.get(position), payloads);
+    public void onBindViewHolder(RecyclerView.ViewHolder vh, int position, List<Object> payloads) {
+        delegatesManager.onBindViewHolder(vh, items.get(position), payloads);
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
-        delegatesManager.onViewRecycled(holder);
+    public void onViewRecycled(RecyclerView.ViewHolder vh) {
+        delegatesManager.onViewRecycled(vh);
     }
 
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
-        return delegatesManager.onFailedToRecycleView(holder);
+    public boolean onFailedToRecycleView(RecyclerView.ViewHolder vh) {
+        return delegatesManager.onFailedToRecycleView(vh);
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-        delegatesManager.onViewAttachedToWindow(holder);
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder vh) {
+        delegatesManager.onViewAttachedToWindow(vh);
     }
 
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
-        delegatesManager.onViewDetachedFromWindow(holder);
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder vh) {
+        delegatesManager.onViewDetachedFromWindow(vh);
     }
 }
