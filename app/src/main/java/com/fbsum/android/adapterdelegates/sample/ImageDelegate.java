@@ -22,7 +22,7 @@ public class ImageDelegate extends SimpleAdapterDelegate<Item> {
     }
 
     @Override
-    public boolean isForViewType(@NonNull Item item) {
+    public boolean isForViewType(int position, @NonNull Item item) {
         return item instanceof ImageItem;
     }
 

@@ -23,7 +23,7 @@ public class ComplexDelegate extends SimpleAdapterDelegate<Item> {
     }
 
     @Override
-    public boolean isForViewType(@NonNull Item item) {
+    public boolean isForViewType(int position, @NonNull Item item) {
         return item instanceof ComplexItem;
     }
 

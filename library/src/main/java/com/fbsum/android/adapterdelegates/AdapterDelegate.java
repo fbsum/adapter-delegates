@@ -34,7 +34,7 @@ public abstract class AdapterDelegate<T> {
         this.layoutInflater = LayoutInflater.from(activity);
     }
 
-    public abstract boolean isForViewType(@NonNull T item);
+    public abstract boolean isForViewType(int position, @NonNull T item);
 
     @NonNull
     public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {

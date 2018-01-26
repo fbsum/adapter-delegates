@@ -56,11 +56,11 @@ class AdapterDelegatesManager<T> {
         int delegatesCount = delegates.size();
         for (int i = 0; i < delegatesCount; i++) {
             AdapterDelegate<T> delegate = delegates.valueAt(i);
-            if (delegate.isForViewType(items.get(position))) {
+            if (delegate.isForViewType(position, items.get(position))) {
                 return delegates.keyAt(i);
             }
         }
-        throw new IllegalArgumentException("No AdapterDelegate added that matches position=" + position + " in data source");
+        throw new IllegalArgumentException("No AdapterDelegate added that matches position =" + position + " in data source");
     }
 
     RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
