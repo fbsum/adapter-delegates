@@ -1,6 +1,7 @@
 package com.fbsum.android.adapterdelegates.sample;
 
 import android.app.Activity;
+import android.support.v7.util.DiffUtil;
 import android.view.View;
 import android.widget.Toast;
 
@@ -8,10 +9,8 @@ import com.fbsum.android.adapterdelegates.DelegationAdapter;
 import com.fbsum.android.adapterdelegates.SimpleAdapterDelegate;
 import com.fbsum.android.adapterdelegates.sample.model.ComplexItem;
 import com.fbsum.android.adapterdelegates.sample.model.ContentItem;
+import com.fbsum.android.adapterdelegates.sample.model.ImageItem;
 import com.fbsum.android.adapterdelegates.sample.model.Item;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sum on 5/10/16.
@@ -20,9 +19,35 @@ public class MainAdapter extends DelegationAdapter<Item> {
 
     private Activity activity;
 
-    public MainAdapter(Activity activity, List<Item> items) {
+    private static DiffUtil.ItemCallback<Item> diffItemCallback = new DiffUtil.ItemCallback<Item>() {
+        @Override
+        public boolean areItemsTheSame(Item oldItem, Item newItem) {
+            if (oldItem instanceof ImageItem) {
+                if (newItem instanceof ImageItem) {
+                    return ((ImageItem) oldItem).id == ((ImageItem) newItem).id;
+                }
+            } else if (oldItem instanceof ContentItem) {
+                if (newItem instanceof ContentItem) {
+                    return ((ContentItem) oldItem).id == ((ContentItem) newItem).id;
+                }
+            } else if (oldItem instanceof ComplexItem) {
+                if (newItem instanceof ComplexItem) {
+                    return ((ComplexItem) oldItem).id == ((ComplexItem) newItem).id;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean areContentsTheSame(Item oldItem, Item newItem) {
+            return false;
+        }
+    };
+
+    public MainAdapter(Activity activity) {
+        super(diffItemCallback);
+
         this.activity = activity;
-        this.items = items != null ? items : new ArrayList<Item>();
 
         ContentDelegate contentDelegate = new ContentDelegate(activity);
         ImageDelegate imageDelegate = new ImageDelegate(activity);

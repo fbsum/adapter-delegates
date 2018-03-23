@@ -16,31 +16,37 @@
 
 package com.fbsum.android.adapterdelegates;
 
+import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.ListAdapter;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.List;
 
-public abstract class DelegationAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class DelegationAdapter<T> extends ListAdapter<T, RecyclerView.ViewHolder> {
 
     private AdapterDelegatesManager<T> delegatesManager = new AdapterDelegatesManager<>();
     protected List<T> items;
 
-    protected void addDelegate(AdapterDelegate<T> delegate) {
-        delegatesManager.addDelegate(delegate);
-    }
-
-    public List<T> getItems() {
-        return items;
+    protected DelegationAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
+        super(diffCallback);
     }
 
     public void setItems(List<T> items) {
         this.items = items;
     }
 
-    @Override
-    public int getItemCount() {
-        return items == null ? 0 : items.size();
+    public List<T> getItems() {
+        return items;
+    }
+
+    public void submitList() {
+        super.submitList(items);
+    }
+
+    protected void addDelegate(AdapterDelegate<T> delegate) {
+        delegatesManager.addDelegate(delegate);
     }
 
     @Override
@@ -48,38 +54,39 @@ public abstract class DelegationAdapter<T> extends RecyclerView.Adapter<Recycler
         return delegatesManager.getItemViewType(items, position);
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return delegatesManager.onCreateViewHolder(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, int position) {
         delegatesManager.onBindViewHolder(vh, items.get(position), null);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder vh, int position, List<Object> payloads) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, int position, @NonNull List<Object> payloads) {
         delegatesManager.onBindViewHolder(vh, items.get(position), payloads);
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder vh) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder vh) {
         delegatesManager.onViewRecycled(vh);
     }
 
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder vh) {
+    public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder vh) {
         return delegatesManager.onFailedToRecycleView(vh);
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder vh) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder vh) {
         delegatesManager.onViewAttachedToWindow(vh);
     }
 
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder vh) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder vh) {
         delegatesManager.onViewDetachedFromWindow(vh);
     }
 }

@@ -27,26 +27,10 @@ import java.util.List;
 
 class AdapterDelegatesManager<T> {
 
-    /**
-     * empty payload parameter
-     */
     private static final List<Object> PAYLOADS_EMPTY_LIST = Collections.emptyList();
-
-    /**
-     * Map for ViewType to AdapterDelegate
-     */
     private SparseArrayCompat<AdapterDelegate<T>> delegates = new SparseArrayCompat<>();
 
-    /**
-     * Adds an {@link AdapterDelegate}.
-     * <b>This method automatically assign internally the view type integer by using the next unused</b>
-     *
-     * @param delegate the delegate to add
-     * @return self
-     */
     AdapterDelegatesManager<T> addDelegate(@NonNull AdapterDelegate<T> delegate) {
-        // algorithm could be improved since there could be holes,
-        // but it's very unlikely that we reach Integer.MAX_VALUE and run out of unused indexes
         int itemViewType = delegates.size();
         delegates.put(itemViewType, delegate);
         return this;
@@ -80,11 +64,6 @@ class AdapterDelegatesManager<T> {
         delegate.onBindViewHolder(viewHolder, item, payloads);
     }
 
-    /**
-     * Must be called from {@link RecyclerView.Adapter#onViewRecycled(RecyclerView.ViewHolder)}
-     *
-     * @param viewHolder The ViewHolder for the view being recycled
-     */
     public void onViewRecycled(@NonNull RecyclerView.ViewHolder viewHolder) {
         AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
         if (delegate == null) {
@@ -98,17 +77,6 @@ class AdapterDelegatesManager<T> {
         delegate.onViewRecycled(viewHolder);
     }
 
-    /**
-     * Must be called from {@link RecyclerView.Adapter#onFailedToRecycleView(RecyclerView.ViewHolder)}
-     *
-     * @param viewHolder The ViewHolder containing the View that could not be recycled due to its
-     *                   transient state.
-     * @return True if the View should be recycled, false otherwise. Note that if this method
-     * returns <code>true</code>, RecyclerView <em>will ignore</em> the transient state of
-     * the View and recycle it regardless. If this method returns <code>false</code>,
-     * RecyclerView will check the View's transient state again before giving a final decision.
-     * Default implementation returns false.
-     */
     public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder viewHolder) {
         AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
         if (delegate == null) {
@@ -122,11 +90,6 @@ class AdapterDelegatesManager<T> {
         return delegate.onFailedToRecycleView(viewHolder);
     }
 
-    /**
-     * Must be called from {@link RecyclerView.Adapter#onViewAttachedToWindow(RecyclerView.ViewHolder)}
-     *
-     * @param viewHolder Holder of the view being attached
-     */
     public void onViewAttachedToWindow(RecyclerView.ViewHolder viewHolder) {
         AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
         if (delegate == null) {
@@ -140,11 +103,6 @@ class AdapterDelegatesManager<T> {
         delegate.onViewAttachedToWindow(viewHolder);
     }
 
-    /**
-     * Must be called from {@link RecyclerView.Adapter#onViewDetachedFromWindow(RecyclerView.ViewHolder)}
-     *
-     * @param viewHolder Holder of the view being attached
-     */
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder viewHolder) {
         AdapterDelegate<T> delegate = delegates.get(viewHolder.getItemViewType());
         if (delegate == null) {

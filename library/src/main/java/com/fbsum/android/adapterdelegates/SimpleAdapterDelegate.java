@@ -10,17 +10,18 @@ import android.view.ViewGroup;
 
 public abstract class SimpleAdapterDelegate<T> extends AdapterDelegate<T> {
 
-    @LayoutRes
+    protected LayoutInflater layoutInflater;
     protected int layoutRes;
     protected OnViewClickListener onViewClickListener;
 
     public SimpleAdapterDelegate(Activity activity, @LayoutRes int layoutRes) {
-        super(activity);
+        this.layoutInflater = activity.getLayoutInflater();
         this.layoutRes = layoutRes;
     }
 
+    @NonNull
     @Override
-    protected final RecyclerView.ViewHolder onCreateViewHolder(LayoutInflater layoutInflater, ViewGroup parent) {
+    public final RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent) {
         View itemView = layoutInflater.inflate(layoutRes, parent, false);
         final RecyclerView.ViewHolder viewHolder = onCreateViewHolder(itemView);
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -40,7 +41,7 @@ public abstract class SimpleAdapterDelegate<T> extends AdapterDelegate<T> {
     protected abstract RecyclerView.ViewHolder onCreateViewHolder(@NonNull View itemView);
 
     /**
-     *
+     * On view click listener
      */
     public interface OnViewClickListener {
         /**

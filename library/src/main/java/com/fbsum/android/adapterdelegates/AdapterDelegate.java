@@ -17,10 +17,8 @@
 package com.fbsum.android.adapterdelegates;
 
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -28,20 +26,10 @@ import java.util.List;
 
 public abstract class AdapterDelegate<T> {
 
-    protected LayoutInflater layoutInflater;
-
-    public AdapterDelegate(Activity activity) {
-        this.layoutInflater = LayoutInflater.from(activity);
-    }
-
     public abstract boolean isForViewType(int position, @NonNull T item);
 
     @NonNull
-    public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return onCreateViewHolder(layoutInflater, parent);
-    }
-
-    protected abstract RecyclerView.ViewHolder onCreateViewHolder(LayoutInflater layoutInflater, ViewGroup parent);
+    public abstract RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent);
 
     protected abstract void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh,
                                              @NonNull T item,
@@ -57,6 +45,6 @@ public abstract class AdapterDelegate<T> {
     protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder vh) {
     }
 
-    protected void onViewDetachedFromWindow(RecyclerView.ViewHolder vh) {
+    protected void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder vh) {
     }
 }
